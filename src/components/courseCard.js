@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { Link } from 'gatsby';
 
 const CourseCard = ({ author, description, price, title, link }) => (
   <article className="border border-gray-700 p-4">
@@ -11,4 +11,3 @@ const CourseCard = ({ author, description, price, title, link }) => (
 );
 
 export default CourseCard;
-
