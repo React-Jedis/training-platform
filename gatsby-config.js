@@ -64,7 +64,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-netlify-identity`,
       options: {
-        url: 'https://training-platform.netlify.com',
+        url: 'https://training-platform.netlify.app',
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
