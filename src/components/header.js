@@ -20,10 +20,6 @@ const Header = ({ siteTitle }) => {
 
   return (
     <header className="flex items-center justify-between bg-corporative-3 min-h-35 pl-2 pr-2">
-      <Burger
-        width="2.5rem"
-        className="pb-1 pt-1 pl-2 pr-2 m-2 border rounded-md hover:bg-black hover:bg-opacity-25 hover:opacity-75 cursor-pointer"
-      />
       <span className="text-xl">{siteTitle}</span>
       <Link to="/">
         <Img fixed={data.file.childImageSharp.fixed} alt="Logo" />
