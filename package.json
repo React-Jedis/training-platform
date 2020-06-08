@@ -24,6 +24,7 @@
     "gatsby-source-filesystem": "^2.3.8",
     "gatsby-transformer-remark": "^2.8.14",
     "gatsby-transformer-sharp": "^2.5.3",
+    "netlify-plugin-encrypted-files": "^0.0.5",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -43,11 +44,13 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
+    "start": "ntl dev",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "postinstall": "netlify-lambda install"
+    "postinstall": "netlify-lambda install",
+    "encrypt": "node_modules/.bin/encrypt src/content/courses/**/*.md src/content/courses/**/lessons/*.md",
+    "decrypt": "node_modules/.bin/decrypt --testdecrypt"
   },
   "repository": {
     "type": "git",
