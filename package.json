@@ -44,13 +44,13 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "ntl dev",
+    "start": "yarn develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "postinstall": "netlify-lambda install",
     "encrypt": "node_modules/.bin/encrypt src/content/courses/**/*.md src/content/courses/**/lessons/*.md",
-    "decrypt": "node_modules/.bin/decrypt --testdecrypt"
+    "decrypt": "node_modules/.bin/decrypt"
   },
   "repository": {
     "type": "git",
