@@ -11527,15 +11527,6 @@ netlify-lambda@^1.6.3:
     webpack "^4.17.1"
     webpack-merge "^4.1.4"
 
-netlify-plugin-encrypted-files@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/netlify-plugin-encrypted-files/-/netlify-plugin-encrypted-files-0.0.5.tgz#5ec034d687584ddac1200491e8a35c9416ea373a"
-  integrity sha512-HS1xPXuQzpwFAh6IGT4FCbZnVqIN5q55OA4z7aKvsWd6sGIXE/5PuW6tQ3y+vEadV/0MqcvAZvOvJyMSCPKVuA==
-  dependencies:
-    chalk "^3.0.0"
-    rimraf "^3.0.0"
-    sade "^1.6.1"
-
 next-tick@^1.0.0, next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -14462,7 +14453,7 @@ rxjs@^6.5.3:
   dependencies:
     tslib "^1.9.0"
 
-sade@^1.4.2, sade@^1.6.1:
+sade@^1.4.2:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/sade/-/sade-1.7.3.tgz#a217ccc4fb4abb2d271648bf48f6628b2636fa1b"
   integrity sha512-m4BctppMvJ60W1dXnHq7jMmFe3hPJZDAH85kQ3ACTo7XZNVUuTItCQ+2HfyaMeV5cKrbw7l4vD/6We3GBxvdJw==
