@@ -2,13 +2,3 @@
   command = "yarn build"
   functions = "functions"
   publish = "public"
-
-[[plugins]]
-package = "netlify-plugin-encrypted-files"
-
-  [plugins.inputs]
-  
-  # if specified, allow a small set of branches for which the decrypt is applied
-  branches = [
-    "master"
-  ]
