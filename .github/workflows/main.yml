@@ -19,9 +19,10 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    - name: Bump Git Submodules
+      uses: domdere/git-submodule-action@0.0.1
     - name: Adding elements
-      run: | 
-        git submodule update --remote
+      run: |
         git config --local user.email 'action@github.com'
         git config --local user.name 'GitHub Action'
         git add -A
