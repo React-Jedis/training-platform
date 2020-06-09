@@ -18,5 +18,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - uses: actions/checkout@v1
+    - name: Submodule Checkout Merge
+      uses: Lori-Systems/submodule-checkout@v2
       with:
-        run: git submodule update --remote
+        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
