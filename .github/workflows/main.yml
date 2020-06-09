@@ -19,11 +19,7 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    - name: Checkout submodules
-      uses: srt32/git-actions@v0.0.3
-      with:
-        args: git submodule update --remote
     - name: Adding elements
       uses: srt32/git-actions@v0.0.3
       with:
-        args: git config --local user.email 'action@github.com' && git config --local user.name 'GitHub Action' && git add -A && git commit -m 'Add changes' -a && git push
+        args: git config --local user.email 'action@github.com' && git submodule update --remote && git config --local user.name 'GitHub Action' && git add -A && git commit -m 'Add changes' -a && git push
