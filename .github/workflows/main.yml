@@ -17,8 +17,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: webfactory/ssh-agent
-      uses: webfactory/ssh-agent@v0.3.0
+    - uses: actions/checkout@v1
+    - uses: webfactory/ssh-agent@v0.3.0
       with:
-        # Private SSH key to register in the SSH agent
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY}}
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
