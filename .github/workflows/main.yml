@@ -26,14 +26,4 @@ jobs:
     - name: Adding elements
       uses: srt32/git-actions@v0.0.3
       with:
-        args: git add -A
-    - name: Committing elements
-      uses: srt32/git-actions@v0.0.3
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        args: git commit -m 'test'
-    - name: Pushing elements
-      uses: srt32/git-actions@v0.0.3
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        args: git push
+        args: git config --local user.email 'action@github.com' && git config --local user.name 'GitHub Action' && git add -A && git commit -m 'Add changes' -a && git push
