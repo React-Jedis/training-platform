@@ -20,5 +20,3 @@ jobs:
     - uses: actions/checkout@v1
     - name: Submodule Checkout Merge
       uses: Lori-Systems/submodule-checkout@v2
-      with:
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
