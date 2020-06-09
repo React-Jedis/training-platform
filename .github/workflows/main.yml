@@ -17,15 +17,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - name: webfactory/ssh-agent
+      uses: webfactory/ssh-agent@v0.3.0
       with:
-        ref: master
-        token: ${{ secrets.DEPLOY_KEY }}
-        submodules: true
-    - run: |
-        git config --local user.email 'action@github.com'
-        git config --local user.name 'GitHub Action'
-        git add -A
-        git commit -m 'Add changes'
-        git push
+        # Private SSH key to register in the SSH agent
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY}}
