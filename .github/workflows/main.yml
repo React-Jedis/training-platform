@@ -20,9 +20,9 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
     - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@2.1.1
+      uses: jwsi/submodule-checkout@v1
       with:
-        remote: true
+        ssh-key: '${{ secrets.DEPLOY_KEY }}'
     - name: Adding elements
       run: |
         git config --local user.email 'action@github.com'
