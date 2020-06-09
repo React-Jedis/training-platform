@@ -30,8 +30,10 @@ jobs:
     - name: Committing elements
       uses: srt32/git-actions@v0.0.3
       with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         args: git commit -m 'test'
     - name: Pushing elements
       uses: srt32/git-actions@v0.0.3
       with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         args: git push
