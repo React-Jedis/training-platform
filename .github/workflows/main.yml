@@ -23,7 +23,15 @@ jobs:
       uses: srt32/git-actions@v0.0.3
       with:
         args: git submodule update --remote
-    - name: Back to the repo
+    - name: Adding elements
       uses: srt32/git-actions@v0.0.3
       with:
-        args: git add -A && git commit -m "updated content" && git push
+        args: git add -A
+    - name: Committing elements
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: git commit -m "update content"
+    - name: Pushing elements
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: git push
