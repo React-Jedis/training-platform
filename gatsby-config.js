@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Project Ludus`,
@@ -67,6 +71,17 @@ module.exports = {
         url: 'https://ludus-test-platform.netlify.app',
       },
     },
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "Fauna",
+        fieldName: "fauna",
+        url: "https://graphql.fauna.com/graphql",
+        headers: {
+          Authorization: `Bearer ${process.env.FAUNA_SERVER_KEY}`,
+        },
+      },
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
