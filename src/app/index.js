@@ -9,15 +9,15 @@ import 'react-netlify-identity-widget/styles.css'; // delete if you want to brin
 const IndexPage = () => {
   const [dialog, setDialog] = React.useState(false);
 
-  // const userId = '267982874334986757';
-  // const { loading, data } = useQuery(GET_USER, {
-  //   variables: { userId },
-  //   skip: !userId,
-  // });
+  const userId = '267982874334986757';
+  const { loading, data } = useQuery(GET_USER, {
+    variables: { userId },
+    skip: !userId,
+  });
 
-  // if (!loading && data) {
-  //   console.log(data);
-  // }
+  if (!loading && data) {
+    console.log(data);
+  }
 
   return (
     <div>
@@ -39,11 +39,11 @@ const IndexPage = () => {
 
 export default IndexPage;
 
-// const GET_USER = gql`
-//   query getUser($userId: ID!) {
-//     findUserByID(id: $userId) {
-//       name
-//       email
-//     }
-//   }
-// `;
+const GET_USER = gql`
+  query getUser($userId: ID!) {
+    findUserByID(id: $userId) {
+      name
+      email
+    }
+  }
+`;
