@@ -3,4 +3,4 @@ import './src/css/global.css';
 
 import { wrapRootElement } from './gatsby-ssr';
 
-export const wrapRootElement = wrapRootElement;
+export { wrapRootElement };
