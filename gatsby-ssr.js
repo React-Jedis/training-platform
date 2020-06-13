@@ -1,11 +1,11 @@
 import React from 'react';
 import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
 import fetch from 'isomorphic-fetch';
 
 const client = new ApolloClient({
   uri: 'https://graphql.fauna.com/graphql',
-  fetch: fetch,
+  fetch,
   request: (operation) => {
     operation.setContext({
       headers: {

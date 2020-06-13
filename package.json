@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "React Jedis",
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
     "@bit/dastag.ui-components.side-drawer": "^0.0.1",
     "@reach/dialog": "^0.10.3",
     "@reach/tabs": "^0.10.3",
@@ -29,7 +30,6 @@
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
-    "react-apollo": "^3.1.5",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.0.0",
     "react-netlify-identity-widget": "^0.2.7",
