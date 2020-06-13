@@ -1,7 +1,20 @@
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/ssr-apis/
- */
+import React from 'react';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import fetch from 'isomorphic-fetch';
 
-// You can delete this file if you're not using it
+const client = new ApolloClient({
+  uri: 'https://graphql.fauna.com/graphql',
+  fetch: fetch,
+  request: (operation) => {
+    operation.setContext({
+      headers: {
+        Authorization: `Bearer ${process.env.FAUNA_CLIENT_KEY}`,
+      },
+    });
+  },
+});
+
+export const wrapRootElement = ({ element }) => (
+  <ApolloProvider client={client}>{element}</ApolloProvider>
+);
