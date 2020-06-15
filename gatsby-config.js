@@ -1,12 +1,8 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
-
 module.exports = {
   siteMetadata: {
     title: `Project Ludus`,
     description: `A training platform to learn and have fun.`,
-    author: `React Jedis`,
+    author: `React Jedis`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
