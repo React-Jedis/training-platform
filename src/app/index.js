@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { navigate } from 'gatsby';
 import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 
-import { IdentityModal } from 'react-netlify-identity-widget';
+import {
+  IdentityModal,
+  useIdentityContext,
+} from 'react-netlify-identity-widget';
 import 'react-netlify-identity-widget/styles.css'; // delete if you want to bring your own CSS
 
 const IndexPage = () => {
+  const { isLoggedIn } = useIdentityContext();
   const [dialog, setDialog] = React.useState(false);
-
-  const userId = '267982874334986757';
-  const { loading, data } = useQuery(GET_USER, {
-    variables: { userId },
-    skip: !userId,
+  const [getUser] = useLazyQuery(GET_USER_BY_EMAIL, {
+    onCompleted: (resultData) => {
+      if (resultData && resultData.findUserByEmail) {
+        // TODO set in the cookie
+        navigate('/courses');
+      }
+    },
   });
 
-  if (!loading && data) {
-    console.log(data);
-  }
+  const [createUser] = useMutation(CREATE_USER, {
+    onCompleted: (resultData) => {
+      navigate('/courses');
+    },
+  });
+
+  useEffect(() => {
+    if (isLoggedIn) navigate('/courses');
+  }, []);
 
   return (
     <div>
@@ -28,10 +40,21 @@ const IndexPage = () => {
         showDialog={dialog}
         onCloseDialog={() => setDialog(false)}
         onLogin={(user) => {
-          // TODO Retrieve info from FaunaDB
-          navigate('/courses');
+          getUser({
+            variables: { email: user.email },
+          });
         }}
-        onSignup={(user) => navigate('/courses')}
+        onSignup={(user) => {
+          createUser({
+            variables: {
+              data: {
+                name: user.user_metadata.full_name,
+                email: user.email,
+                registerDate: new Date().toISOString(),
+              },
+            },
+          });
+        }}
       />
     </div>
   );
@@ -39,9 +62,19 @@ const IndexPage = () => {
 
 export default IndexPage;
 
-const GET_USER = gql`
-  query getUser($userId: ID!) {
-    findUserByID(id: $userId) {
+const GET_USER_BY_EMAIL = gql`
+  query getUserByMail($email: String!) {
+    findUserByEmail(email: $email) {
+      name
+      email
+    }
+  }
+`;
+
+const CREATE_USER = gql`
+  mutation createUser($data: UserInput!) {
+    createUser(data: $data) {
+      _id
       name
       email
     }
