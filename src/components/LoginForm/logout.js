@@ -3,10 +3,10 @@ import React, { useContext } from 'react';
 import FirebaseContext from '../../context/Firebase';
 
 const Logout = () => {
-  const { firebase } = useContext(FirebaseContext);
+  const fbContext = useContext(FirebaseContext);
 
   const onLogoutHandler = () => {
-    firebase
+    fbContext.firebase
       .auth()
       .signOut()
       .catch((error) => {

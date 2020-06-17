@@ -5,10 +5,10 @@ import FirebaseContext from '../../context/Firebase';
 const LoginForm = ({ toggleIsLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { firebase } = useContext(FirebaseContext);
+  const fbContext = useContext(FirebaseContext);
 
   const loginHandler = () => {
-    firebase
+    fbContext.firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(function (error) {

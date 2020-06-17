@@ -4,10 +4,10 @@ import FirebaseContext from '../context/Firebase';
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
-  const { firebase } = useContext(FirebaseContext);
+  const fbContext = useContext(FirebaseContext);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((currentUser) => {
+    fbContext.firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
         // useReducer
         setUser({

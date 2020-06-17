@@ -6,10 +6,10 @@ const LoginForm = ({ toggleIsLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { firebase } = useContext(FirebaseContext);
+  const fbContext = useContext(FirebaseContext);
 
   const registerHandler = () => {
-    firebase
+    fbContext.firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(function (error) {
