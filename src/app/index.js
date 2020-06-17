@@ -1,14 +1,24 @@
-import React from 'react';
-import { navigate } from 'gatsby'; // delete if you want to bring your own CSS
+import React, { useEffect, useContext } from 'react';
+import { navigate } from 'gatsby';
+
+import LoginForm from '../components/LoginForm';
+import UserContext from '../context/User';
 
 const IndexPage = () => {
-  const [dialog, setDialog] = React.useState(false);
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/courses');
+    }
+  }, [user]);
 
   return (
     <div>
       <h1>Ludus Platform</h1>
       <p>Welcome to our training platform for becoming an expert.</p>
-      <button onClick={() => setDialog(true)}>Login▶️</button>
+
+      {!user && <LoginForm />}
     </div>
   );
 };
