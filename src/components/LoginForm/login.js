@@ -15,7 +15,7 @@ const LoginForm = ({ toggleIsLogin }) => {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log('[register error]', errorCode, errorCode);
+        console.log('[register error]', errorCode, errorMessage);
       });
   };
 
