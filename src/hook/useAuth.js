@@ -1,32 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
-
 import FirebaseContext from '../context/Firebase';
+import useFirestore from '../hook/useFirestore';
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const fbContext = useContext(FirebaseContext);
+  const { getDocumentByUID } = useFirestore();
 
   useEffect(() => {
     fbContext.firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
-        console.log('useAuth -> currentUser', currentUser);
-
-        let usersRef = fbContext.firebase.firestore().collection('users');
-        usersRef
-          .doc(currentUser.uid)
-          .get()
-          .then((snapshot) => {
-            if (snapshot.empty) {
-              console.log('No matching documents.');
-              return;
-            }
-            console.log('useAuth -> snapshot', snapshot.data());
-          })
-          .catch((err) => {
-            console.log('Error getting documents', err);
-          });
-
-        // useReducer
+        getDocumentByUID('users', currentUser.uid).then((userExtra) =>
+          console.log('useAuth -> userExtra', userExtra)
+        );
         setUser({
           name: currentUser.displayName,
           email: currentUser.email,

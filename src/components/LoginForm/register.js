@@ -1,32 +1,34 @@
 import React, { useState, useContext } from 'react';
-import firebase from '../../components/firebase';
-
 import FirebaseContext from '../../context/Firebase';
+import useFirestore from '../../hook/useFirestore';
 
 const LoginForm = ({ toggleIsLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const fbContext = useContext(FirebaseContext);
+  const { createDocument, getDocumentByUID } = useFirestore();
 
   const postRegister = (result) => {
-    console.log('postRegister -> result', result);
-    const { user, additionalUserInfo } = result;
-    const newUser = {
-      displayName: user.displayName,
-      email: user.email,
-      photoUrl: user.photoUrl,
-    };
-    if (additionalUserInfo.providerId === 'google.com') {
-      newUser['name'] = additionalUserInfo.given_name;
-      newUser['surName'] = additionalUserInfo.family_name;
-      newUser['locale'] = additionalUserInfo.locale;
-    }
-    fbContext.firebase
-      .firestore()
-      .collection('users')
-      .doc(user.email)
-      .set(newUser);
+    getDocumentByUID('users', result.user.uid).then((existingUser) => {
+      if (!existingUser) {
+        const { user, additionalUserInfo } = result;
+        const newUser = {
+          displayName: user.displayName,
+          email: user.email,
+          photoUrl: user.photoURL,
+        };
+        if (additionalUserInfo.providerId === 'google.com') {
+          newUser['name'] = additionalUserInfo.profile.given_name;
+          newUser['surName'] = additionalUserInfo.profile.family_name;
+          newUser['locale'] = additionalUserInfo.profile.locale;
+        }
+        console.log(`[Creating user]: ${JSON.stringify(newUser)}`);
+        createDocument('users', user.uid, newUser).then((result) =>
+          console.log('User created: ', result)
+        );
+      }
+    });
   };
 
   const registerHandler = () => {
@@ -38,7 +40,7 @@ const LoginForm = ({ toggleIsLogin }) => {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log('[register error]', errorCode, errorCode);
+        console.log('[register error]', errorCode, errorMessage);
       });
   };
 
@@ -46,7 +48,16 @@ const LoginForm = ({ toggleIsLogin }) => {
     const provider = new fbContext.firebase.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
-    fbContext.firebase.auth().signInWithPopup(provider).then(postRegister);
+    fbContext.firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(postRegister)
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log('[register error]', errorCode, errorMessage);
+      });
   };
 
   return (
