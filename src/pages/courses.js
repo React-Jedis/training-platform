@@ -17,6 +17,7 @@ const Courses = () => {
             price
             title
             type
+            role
           }
         }
       }

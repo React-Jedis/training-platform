@@ -24,7 +24,7 @@ const Header = ({ siteTitle }) => {
   return (
     <header className="flex items-center justify-between bg-corporative-3 min-h-35 pl-2 pr-2">
       <span className="text-xl">{siteTitle}</span>
-      <span>{user ? user.email : null}</span> <Logout />
+      <span>{user ? user.displayName : null}</span> <Logout />
       <Link to="/">
         <Img fixed={data.file.childImageSharp.fixed} alt="Logo" />
       </Link>

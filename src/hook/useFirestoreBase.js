@@ -3,9 +3,8 @@ import { useContext } from 'react';
 import * as R from 'ramda';
 import FirebaseContext from '../context/Firebase';
 
-const useFirestore = () => {
+const useFirestoreBase = () => {
   const { firebase } = useContext(FirebaseContext);
-
   const getDocumentByUID = R.curry((collectionName, docUID) => {
     const docRef = firebase.firestore().collection(collectionName);
     return docRef
@@ -16,7 +15,7 @@ const useFirestore = () => {
           console.log('No matching documents.');
           return;
         }
-        console.log('useAuth -> snapshot', snapshot.data());
+        console.log('useFirestoreBase -> snapshot.data', snapshot.data());
         return snapshot.data();
       })
       .catch((err) => {
@@ -37,8 +36,7 @@ const useFirestore = () => {
         console.error(`Error adding document: ', ${error}`);
       });
   });
-
   return { getDocumentByUID, createDocument };
 };
 
-export default useFirestore;
+export default useFirestoreBase;

@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import FirebaseContext from '../../context/Firebase';
-import useFirestore from '../../hook/useFirestore';
+import useFirestoreBase from '../../hook/useFirestoreBase';
 
 const LoginForm = ({ toggleIsLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const fbContext = useContext(FirebaseContext);
-  const { createDocument, getDocumentByUID } = useFirestore();
+  const { createDocument, getDocumentByUID } = useFirestoreBase();
 
   const postRegister = (result) => {
     getDocumentByUID('users', result.user.uid).then((existingUser) => {
