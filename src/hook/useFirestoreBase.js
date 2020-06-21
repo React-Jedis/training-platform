@@ -4,9 +4,9 @@ import * as R from 'ramda';
 import FirebaseContext from '../context/Firebase';
 
 const useFirestoreBase = () => {
-  const { firebase } = useContext(FirebaseContext);
+  const fbContext = useContext(FirebaseContext);
   const getDocumentByUID = R.curry((collectionName, docUID) => {
-    const docRef = firebase.firestore().collection(collectionName);
+    const docRef = fbContext.firebase.firestore().collection(collectionName);
     return docRef
       .doc(docUID)
       .get()
