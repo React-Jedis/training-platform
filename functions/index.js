@@ -1,19 +1,22 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const serviceAccount = require('./admin.json');
-const moment = require('moment');
-const axios = require('axios');
-const cors = require('cors')({ origin: true });
+const { functions } = require('./src/admin');
+// const serviceAccount = require('./admin.json');
+const { newUserSignup, userDeleted } = require('./src/auth');
+const { getDocumentByUID } = require('./src/firestore');
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://pl-training-platform.firebaseio.com/',
-});
+const REGION = 'europe-west3';
 
-const formDate = (date) => moment(date.toDate()).format('DD-MM-YYYY HH:mm:ss');
+module.exports = {
+  newUserSignup: functions.region(REGION).auth.user().onCreate(newUserSignup),
+  userDeleted: functions.region(REGION).auth.user().onDelete(userDeleted),
+  getDocumentByUID: functions.region(REGION).https.onCall((data, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'unauthenticated',
+        'Only authenticated users can add requests'
+      );
+    }
 
-exports.createUser = functions.https.onRequest(async (request, response) => {
-  cors(request, response, () => {
-    const user = request.query;
-  });
-});
+    const { collectionName, docUID } = data;
+    return getDocumentByUID(collectionName, docUID);
+  }),
+};

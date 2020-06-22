@@ -1,21 +1,22 @@
-import React, { useState, useContext } from 'react';
-
-import FirebaseContext from '../../context/Firebase';
+import React, { useState } from 'react';
+import useFirebase from '../../hook/useFirebase';
 
 const LoginForm = ({ toggleIsLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const fbContext = useContext(FirebaseContext);
+  const firebase = useFirebase();
 
   const loginHandler = () => {
-    fbContext.firebase
+    if (!firebase) return;
+    firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then((user) => console.log('[logged in]', user))
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log('[register error]', errorCode, errorMessage);
+        console.log('[login error]', errorCode, errorMessage);
       });
   };
 

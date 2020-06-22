@@ -1,41 +1,17 @@
-import React, { useState, useContext } from 'react';
-import FirebaseContext from '../../context/Firebase';
-import useFirestoreBase from '../../hook/useFirestoreBase';
+import React, { useState } from 'react';
+import useFirebase from '../../hook/useFirebase';
 
 const LoginForm = ({ toggleIsLogin }) => {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const fbContext = useContext(FirebaseContext);
-  const { createDocument, getDocumentByUID } = useFirestoreBase();
-
-  const postRegister = (result) => {
-    getDocumentByUID('users', result.user.uid).then((existingUser) => {
-      if (!existingUser) {
-        const { user, additionalUserInfo } = result;
-        const newUser = {
-          displayName: user.displayName,
-          email: user.email,
-          photoUrl: user.photoURL,
-        };
-        if (additionalUserInfo.providerId === 'google.com') {
-          newUser['name'] = additionalUserInfo.profile.given_name;
-          newUser['surName'] = additionalUserInfo.profile.family_name;
-          newUser['locale'] = additionalUserInfo.profile.locale;
-        }
-        console.log(`[Creating user]: ${JSON.stringify(newUser)}`);
-        createDocument('users', user.uid, newUser).then((result) =>
-          console.log('User created: ', result)
-        );
-      }
-    });
-  };
+  const firebase = useFirebase();
 
   const registerHandler = () => {
-    fbContext.firebase
+    if (!firebase) return;
+    firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(postRegister)
+      .then((result) => console.log(result))
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -45,13 +21,14 @@ const LoginForm = ({ toggleIsLogin }) => {
   };
 
   const registerGoogleHandler = () => {
-    const provider = new fbContext.firebase.auth.GoogleAuthProvider();
+    if (!firebase) return;
+    const provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
-    fbContext.firebase
+    firebase
       .auth()
       .signInWithPopup(provider)
-      .then(postRegister)
+      .then((result) => console.log(result))
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -62,15 +39,6 @@ const LoginForm = ({ toggleIsLogin }) => {
 
   return (
     <div>
-      <div>
-        <label>Name</label>
-        <input
-          className="p-2 m-2 text-black"
-          type="text"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-      </div>
       <div>
         <label>Email</label>
         <input

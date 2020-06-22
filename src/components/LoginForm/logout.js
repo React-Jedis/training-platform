@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-
-import FirebaseContext from '../../context/Firebase';
+import React from 'react';
+import useFirebase from '../../hook/useFirebase';
 
 const Logout = () => {
-  const fbContext = useContext(FirebaseContext);
+  const firebase = useFirebase();
 
   const onLogoutHandler = () => {
-    fbContext.firebase
+    if (!firebase) return;
+    firebase
       .auth()
       .signOut()
       .catch((error) => {

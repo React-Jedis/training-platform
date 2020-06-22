@@ -1,11 +1,9 @@
-// Firebase App (the core Firebase SDK) is always required and must be listed first
-import * as firebase from 'firebase/app';
-
-// Add the Firebase products that you want to use
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/functions';
 
-const firebaseConfig = {
+const config = {
   apiKey: 'AIzaSyC3c-29Zt0jtVNddq_RWc3psSts_9nAmoc',
   authDomain: 'pl-training-platform.firebaseapp.com',
   databaseURL: 'https://pl-training-platform.firebaseio.com',
@@ -16,9 +14,16 @@ const firebaseConfig = {
   measurementId: 'G-QW7861NQWK',
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+let instance = null;
 
-//firebase.analytics()
+const getFirebase = () => {
+  if (typeof window !== 'undefined') {
+    if (instance) return instance;
+    instance = firebase.initializeApp(config);
+    return instance;
+  }
 
-export default firebase;
+  return null;
+};
+
+export default getFirebase;

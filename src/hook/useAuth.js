@@ -1,36 +1,32 @@
-import { useState, useEffect, useContext } from 'react';
-import FirebaseContext from '../context/Firebase';
-import useFirestoreBase from './useFirestoreBase';
-import useFirestoreRoles from './useFirestoreRoles';
+import { useState, useEffect } from 'react';
+import useFirebase from './useFirebase';
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const [roles, setRoles] = useState([]);
-  const fbContext = useContext(FirebaseContext);
-  const { getDocumentByUID } = useFirestoreBase();
-  const { getAliveRolesByUserUID } = useFirestoreRoles();
+  const firebase = useFirebase();
 
   useEffect(() => {
-    fbContext.firebase.auth().onAuthStateChanged((currentUser) => {
+    if (!firebase) return;
+    firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
-        getDocumentByUID('users', currentUser.uid).then((userExtra) =>
-          setUser({
-            name: currentUser.displayName,
-            email: currentUser.email,
-            ...userExtra,
+        console.log('[currentUser]', currentUser);
+        firebase
+          .functions('europe-west3')
+          .httpsCallable('getDocumentByUID')({
+            collectionName: 'users',
+            docUID: currentUser.uid,
           })
-        );
-        getAliveRolesByUserUID(currentUser.uid).then((userRoles) =>
-          setRoles(userRoles)
-        );
-        console.log('[user]', currentUser);
+          .then((docData) => {
+            console.log('[dbUser]', docData.data);
+            setUser(docData.data);
+          });
       } else {
-        // No user is signed in.
         console.log(':)');
         setUser(null);
       }
     });
-  }, []);
+  }, [firebase]);
 
   return {
     user,
