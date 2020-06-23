@@ -6,10 +6,9 @@ import Header from './header';
 import Footer from './footer';
 import useAuth from '../hook/useAuth';
 import UserContext from '../context/User';
-import RolesContext from '../context/Roles';
 
 const Layout = ({ children }) => {
-  const { user, roles } = useAuth();
+  const { user } = useAuth();
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -23,13 +22,9 @@ const Layout = ({ children }) => {
   return (
     <div className="flex flex-col text-white min-h-screen">
       <UserContext.Provider value={{ user }}>
-        <RolesContext.Provider value={{ roles }}>
-          <Header siteTitle={data.site.siteMetadata.title} />
-          <main className="flex-grow mx-auto w-auto md:px-8 p-8">
-            {children}
-          </main>
-          <Footer />
-        </RolesContext.Provider>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <main className="flex-grow mx-auto w-auto md:px-8 p-8">{children}</main>
+        <Footer />
       </UserContext.Provider>
     </div>
   );

@@ -11,7 +11,6 @@ const LoginForm = ({ toggleIsLogin }) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((result) => console.log(result))
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -22,13 +21,13 @@ const LoginForm = ({ toggleIsLogin }) => {
 
   const registerGoogleHandler = () => {
     if (!firebase) return;
-    const provider = new firebase.auth.GoogleAuthProvider();
+    console.log('registerGoogleHandler -> firebase', firebase);
+    const provider = new firebase.firebase_.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
     firebase
       .auth()
       .signInWithPopup(provider)
-      .then((result) => console.log(result))
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;

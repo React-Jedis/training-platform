@@ -3,7 +3,6 @@ import useFirebase from './useFirebase';
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
-  const [roles, setRoles] = useState([]);
   const firebase = useFirebase();
 
   useEffect(() => {
@@ -13,9 +12,8 @@ const useAuth = () => {
         console.log('[currentUser]', currentUser);
         firebase
           .functions('europe-west3')
-          .httpsCallable('getDocumentByUID')({
-            collectionName: 'users',
-            docUID: currentUser.uid,
+          .httpsCallable('loadUserByUID')({
+            userUID: currentUser.uid,
           })
           .then((docData) => {
             console.log('[dbUser]', docData.data);
@@ -30,7 +28,6 @@ const useAuth = () => {
 
   return {
     user,
-    roles,
   };
 };
 

@@ -1,16 +1,19 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-
 import LessonEntry from '../components/lessonEntry';
 
 const CoursePage = ({ data }) => {
-  console.log(data);
+  console.log('CoursePage -> console.log(data);', data);
   return (
     <div className="flex flex-wrap">
       <div className="border border-gray-800">
         <div dangerouslySetInnerHTML={{ __html: data.courses.nodes[0].html }} />
         {data.lessons.nodes.map((lesson) => (
-          <LessonEntry {...lesson.frontmatter} link={lesson.fields.slug} />
+          <LessonEntry
+            {...lesson.frontmatter}
+            link={lesson.fields.slug}
+            role={data.courses.nodes[0].frontmatter.role}
+          />
         ))}
       </div>
     </div>
@@ -31,6 +34,7 @@ export const pageQuery = graphql`
           id
           description
           author
+          role
         }
         fields {
           slug
@@ -41,12 +45,13 @@ export const pageQuery = graphql`
     lessons: allMarkdownRemark(
       filter: {
         fields: { slug: { regex: $slug } }
-        frontmatter: { type: { eq: "lesson" } }
+        fileAbsolutePath: { regex: "/lesson/" }
       }
     ) {
       nodes {
         frontmatter {
           title
+          free
         }
         fields {
           slug

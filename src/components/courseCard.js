@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'gatsby';
-import RolesContext from '../context/Roles';
+import UserContext from '../context/User';
 
 const CourseCard = ({ author, description, price, title, link, role }) => {
-  const { roles } = useContext(RolesContext);
-  const enrolled = roles.includes(role);
+  const { user } = useContext(UserContext);
+  const enrolled = user && user.roles && user.roles.includes(role);
 
   return (
     <article
